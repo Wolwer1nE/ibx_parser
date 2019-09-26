@@ -5,8 +5,9 @@ module IBXParser
   def self.parse(text)
     doc = Nokogiri::XML.parse(text)
     result = ''
+    query_nodes = %w[source caption]
     doc.traverse do |node|
-      if %w[source caption].include?(node.name)
+      if query_nodes.include?(node.name)
         result << Base64.decode64(node.text) << "\n"
       end
     end
